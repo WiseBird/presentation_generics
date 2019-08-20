@@ -21,6 +21,12 @@
             link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
             document.getElementsByTagName('head')[0].appendChild(link);
         </script>
+
+		<style>
+			h2 {
+				text-transform: none !important;
+			}
+		</style>
     </head>
     <body>
         <div class="reveal">
@@ -59,7 +65,7 @@ selectors.items.contains('test').checkbox.eq(2)().click()
                 >
                 </section>
                 <section>
-                    <h2 style="text-transform: none;">"type" KEYWORD</h2>
+                    <h2>"type" keyword</h2>
                     <pre><code class="hljs typescript" data-trim>
 type contentId = string
 type key = string | number
@@ -102,10 +108,36 @@ let z: input&lt;Date> // Date | Date[] | Observable&lt;Date>
                 >
                 </section>
                 <section>
-                    <h2 style="text-transform: none;">"keyof" KEYWORD</h2>
+                    <h2>Let's write getProp function</h2>
                     <pre><code class="hljs typescript" data-trim>
+let obj = {
+	num: 1,
+}
+getProp(obj, 'num') // 1
+                    </code></pre>
+                </section>
+                <section>
+                    <h2>String literal types</h2>
+                    <pre><code class="hljs typescript" data-trim>
+let s: string
+s = 'one' // ok
+s = '1' // ok
+                    </code></pre>
+                    <pre class="fragment"><code class="hljs typescript" data-trim>
+let s: 'one'
+s = 'one' // ok
+s = 'two' // error
+                    </code></pre>
+                    <pre class="fragment"><code class="hljs typescript" data-trim>
 let s: 'one' | 'two'
+s = 'two' // ok
 s = '1' // error
+                    </code></pre>
+                </section>
+                <section>
+                    <h2>getProp definition</h2>
+                    <pre><code class="hljs typescript" data-trim>
+declare function getProp(obj: object, key: string): any
                     </code></pre>
                     <pre class="fragment"><code class="hljs typescript" data-trim>
 interface Interface {
@@ -113,15 +145,36 @@ interface Interface {
     num: number;
 }
 
+declare var obj: Interface;
+getProp(obj, 'test'); // ok
+                    </code></pre>
+                    <pre class="fragment"><code class="hljs typescript" data-trim>
+declare function getProp(obj: Interface, key: 'str' | 'num'): any
+getProp(obj, 'test'); // error
+                    </code></pre>
+                </section>
+                <section>
+                    <h2>"keyof" type operator</h2>
+                    <pre><code class="hljs typescript" data-trim>
+interface Interface {
+    str: string;
+    num: number;
+}
+                    </code></pre>
+                    <pre class="fragment"><code class="hljs typescript" data-trim>
 let x: keyof Interface // 'str' | 'num'
 x = 'num' // ok
 x = 'test' // error
                     </code></pre>
                     <pre class="fragment"><code class="hljs typescript" data-trim>
-declare function log&lt;T>(obj: T, key: keyof T): void
-let obj: Interface
-
-log(obj, 'str')
+declare function getProp(obj: Interface, key: keyof Interface): any
+getProp(obj, 'test'); // error
+                    </code></pre>
+                    <pre class="fragment"><code class="hljs typescript" data-trim>
+declare function getProp&lt;T>(obj: T, key: keyof T): any
+                    </code></pre>
+                    <pre class="fragment"><code class="hljs typescript" data-trim>
+getProp(obj, 'str'); // any
                     </code></pre>
                 </section>
                 <section>
@@ -131,18 +184,32 @@ interface Interface {
     str: string;
     num: number;
 }
-
+                    </code></pre>
+					<pre class="fragment"><code class="hljs typescript" data-trim>
 let x: Interface['str'] // string
 let y: Interface['num'] // number
                     </code></pre>
                     <pre class="fragment"><code class="hljs typescript" data-trim>
-type propType&lt;T extends keyof Interface> = Interface[T]
-let z: propType&lt;'str'> // string
+type interfacePropertyType&lt;T extends keyof Interface> = Interface[T]
+let z: interfacePropertyType&lt;'str'> // string
+                    </code></pre>
+                    <pre class="fragment"><code class="hljs typescript" data-trim>
+declare function getProp&lt;T>(obj: T, key: keyof T): T[keyof T]
+getProp(obj, 'str'); // string | number
+                    </code></pre>
+                    <pre class="fragment"><code class="hljs typescript" data-trim>
+declare function getProp&lt;T, K extends keyof T>(obj: T, key: K): T[K]
+getProp(obj, 'str'); // string
                     </code></pre>
                 </section>
                 <section
                         data-background-interactive
-                        data-background-iframe="https://www.typescriptlang.org/play/#code/KYDwDg9gTgLgBASwHY2FAZgQwMbDgZWBhmQHMBpYATzgG8AoOJuAcWCTUwBsB9AGUxJSAV0ylgALjgBydtLgAfGeijyl0gM5dpAbkbMAspjA8AkkgQlufCEMvCAJpLhJhAWwBGaPczhGT5pYI1pgkMI7Orp7e9AC+9PQwVGB4lFQAglBQmDQAvHAAFADW1BDoBEQkQmkAlADaALp6icl4hMRkaZnZVAA85PhwoKhIDhpwXVk5AHxw+Qy+dQAKiEgT+HVRXlANDVLtVRTUyw1xCVxEcCD7lZ3H0mwc2bwCQqLi0k30F-BUUpM9TbubZfBJghLIVAYHB4ADCySgwA0GgAohc3Ox4AtmNguAhsEUCjUpAA3CAIBx6eJggAG9F6XgAFgBaDGuZl4jQwab6Ji9BwIElwXGYZG5aRs4QchBc5kaYCYKDYRnSHm+Xy9ZBgYTwAD0avVfIQwq4oo0uQAREz8bZmbiIPKLdNerqEAa+bqBST3XAGcAWZLmZZgG4fRqmXbGcACR4ICBnbqI8ro0VY-HeeraLQ4AA6PNwWLxDWJ-2s9hS4OhjN5nP0ksB8vSrk8un0bC2LkEHiwgDyADkACoogAaA7mBConggXBz6GgBWkhAu2Bg0DgsNsqBAMGkNT0PzgXKgwhXwkR4+xTHliuV5m1MCk0hzgc5MDlCqVjLgsy1OukABoM0rDQpEvdU6nwbt+yHUc9hkCNA0rACM18ZMYzjR8kyjdCQGQ3xYkA2JmnQYQkBXBBbDgGBsiQDQ5ygNwCmuOBBCoYkWKQGhaGpA95WXVcoHGfJqMEOjoEYo8T3CRE9wSPjowEjQc2vT87x1Ikc1xfFCVk+SV2gJTgM0zdMGQDQF1QLld007DUzjHNgAARwKAAmGoNK0gkiWacFITQLBcDgHsPAAKwU8woQC4AAEY6AzOoSj+Q9qLIOCABFQmARoqXoPzoUC4KwpXCL-JhFy4sWCkpC2NA4KPMgcpaFI4AgUKFIHVoL3ixKpHqoR0sy7K4j0JJmvbFBMVMBxxz60gRs6xKZpSoRFBcYEYnBMFRraYB+IM-AIDPXAADVuGEPB8lm1alwU-bDqVYA+yRVBKVyib8p2vbBIOo68DAhLqF65bSDgm79O++6TrO4BGryqKKi+jQfoep6uWAabhnYMYEduiHfoq5gIKgwcRwHOrgca7acfB0xUDcXox3mWJZnyAoiTmWZ4TARFkTRENMRqOAADI4DHEWwPGmBTNogotwfZKoDIdiwYE2mQwZ6YfGYJyCmQJxmJqqBld23G1fpgdNYzdAEC4KECj0gSgcVoRja+s2Na1pgPCoAAJCAIEJJBMAxJ2yH-OASWhgB+UOXZuN26Y94ams+3GNAAJSRYRbdOrhzoZoZtyx8YVbu37c-OlnRcLkZsdLvGHozKPqcUzONGzmANYzePTbp+bmvrjOs9tgvMdGEuTfBpHIeAKv6-d-7yFWOBErKUXQcn1vh5gCvgAZupyAaS3meI0jyMo1GXsH0ei-Hluy4e6Z7ZnqQB3DsBFUxWPSHHaRdx7qebcO4awJkwRE0k1iuC4FwRq9AHYGWUh+W8SB7weTxF5XSm8EFGUltLcy0hLI7hqDZFMaYHLOTcmg7S3lNq0LBEAA"
+                        data-background-iframe="https://www.typescriptlang.org/play/?strictNullChecks=false#code/MYewdgzgLgBAygfQMIHkByAVAogDQzAXngE8BbAIxABsA6AMxACcAKAcjgFMqPgomYk4KBwAeUVgEoA3AChusaIwCuvJYw6EYAbxkw9MCBwCGjYAAsAkmAAOSqAC4YrGqQ5glAWioBLaB8Mm5jAAfDDeNnasADS6+t7CpBCOOvqpMADaiKiYuBgAuo6s5BxmHq7uHvEcpNGxaTDmPADWlCKFxaWNwC0gIrWpAL4xA7IyMuHCjHRGwBpwIGqz2nUZTRzEjorhAOYFBlCMOzAAPjBoHNAcACbzixyyA+Ngk9NL55c3C6YaosJgVxB4F8lil9JlkOhsHg9lswNsHmMrjwqCYNHQlGBeN5wDADkZIAxGKQADz4X5uAFAu7BZgQYEcRwYCSOABKFyUVCgpOCsnkBi4PD4jEBRDxBKYpFpBxUUDUHGkY0M3F4TAgNCqiRoXR6IlkSsFqpoAVMlgiUGYEi1Pm6Fr1ApVwvVCTVoGeRnCEDYwmgki1ZmarRoHAAjswAEwSC1W7w2hVjCYcKYzDRIYjWdQQCBYbjlWCgvTAa1NC2OABuIG8VwRMigaY0bIgHK5GFCRAwUiAA"
+                >
+                </section>
+                <section
+                        data-background-interactive
+                        data-background-iframe="https://www.typescriptlang.org/play/?strictNullChecks=false#code/MYewdgzgLgBAygfQMIHkByAVAogDQzAXngE8BbAIxABsA6AMxACcAKAcjgFMqPgomYk4KBwAeUVgEoA3AChusaIwCuvJYw6EYAbxkw9MCBwCGjYAAsAkmAAOSqAC4YrGqQ5glAWioBLaB8Mm5jAAfDDeNnasADS6+t7CpBCOOvqpMADaiKiYuBgAuo6s5BxmHq7uHvEcpNGxaTDmPADWlCKFxaWNwC0gIrWpAL4xA7IyMuHCjHRGwBpwIGqz2nUZTRzEjorhAOYFBlCMOzAAPjBoHNAcACbzixyyA+Ngk9NL55c3C6YaosJgVxB4F8lil9JlkOhsHg9lswNsHmMrjwqCYNHQlGBeN5wDADkZIAxGKQADz4X5uAFAu7BZgQYEcRwYCSOABKFyUVCgpOCsnkBi4PD4jEBRDxBKYpFpBxUUDUHGkY0M3F4TAgNCqiRoXR6IlkSsFqpoAVMlgiUGYEi1Pm6Fr1ApVwvVCTVoGeRnCEDYwmgki1ZmarRoHAAjswAEwSC1W7w2hX6h1qkPMACMCrGEw4UxmGiQxGs6ggECw3HKsFBemA1qaFscADcQN4rgiZFA8xo2RAOVyMKEiB2uxYEsTyxkANJhMAwNbEEB0GD5VnszkANSMVCUHFJ6VHeR5KwA9Pv+YFTbYHPtDnDZKlD8eTVYz4vO5zB9VibDtsED0fjeYH3ZNgOI4ADIYGYC1CFCXN8wuIsSzcKAJBgUCtAaIR3UgZgaGw5lcTMXwYEeA8ACoVg1JJlnqCt-W6VpAMveEVkeVJyKfAchxHVJtToi8dmvfQBi-FjnWSBoaJ1eijgGZCwJwmTUNdKAMM9bCaFwqB8IgQSVmI-cZEE2RW2sdslygVd103HtNDJMQKUBW5vhWAB+GB+05bkVjYl8hx7Fs21c0zXxJKyiHwUDwKQggoLzAs4OqBCkJQlZFOU5hhDESS4VwtyoCC7l+L0JNwiuRx3AoTNssCny9wGIA"
                 >
                 </section>
             </div>
