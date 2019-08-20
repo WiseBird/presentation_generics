@@ -1,0 +1,169 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+        <title>reveal.js</title>
+
+        <link rel="stylesheet" href="css/reset.css">
+        <link rel="stylesheet" href="css/reveal.css">
+        <link rel="stylesheet" href="css/theme/black.css">
+
+        <!-- Theme used for syntax highlighting of code -->
+        <link rel="stylesheet" href="lib/css/monokai.css">
+
+        <!-- Printing and PDF exports -->
+        <script>
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.type = 'text/css';
+            link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+            document.getElementsByTagName('head')[0].appendChild(link);
+        </script>
+    </head>
+    <body>
+        <div class="reveal">
+            <div class="slides">
+                <section>Typings for Cypress Selectors</section>
+                <section>
+                    <h2>Goal</h2>
+                    <pre><code class="hljs" data-trim>
+<beh-menu-list>
+    <div class='menu-list-search'>
+        <input/>
+        <i class="behicon-close"></i>
+    </div>
+    <beh-menu-item>
+        <beh-checkbox></beh-checkbox>
+    </beh-menu-item>
+</beh-menu-list>
+                    </code></pre>
+                    <pre><code class="hljs typescript" data-trim>
+{
+    searchInput: '.menu-list-search > input',
+    items: {
+        [S_CONTEXT]: 'beh-menu-item',
+        checkbox: 'beh-checkbox',
+    },
+}
+                    </code></pre>
+                    <pre><code class="hljs typescript" data-trim>
+selectors.searchInput().click()
+selectors.items.contains('test').checkbox.eq(2)().click()
+                    </code></pre>
+                </section>
+                <section
+                        data-background-interactive
+                        data-background-iframe="https://www.typescriptlang.org/play/#code/AYKAPARgpgFgtAWygOwK5wDYEsDOAXAPhAAJTiwATLAN2IGMMBDHHAXgHIk1Nc84cojAE50Y7ImUnksyAA6o8xAPQSppMFnpMWrAETQYWOgHtkcBsYG6CYJVlXqlVag-IHEKdFjxQEryZCw5jBQdADWEMYAHjZK7qKhEdH+ZADeqcQAdNnEAL65JGS27lxePn6FpNmZ4HFBpTz4RKAgJsj4xADKAPoAwgDyAHIAKgCiABrDxKxdAJ4IkRiZAGbGQgAU7J1QGKF4a8S9pj5ReOwAlADcILuK+EKodHioQlDTxKmVxALCogCScgUAC5iOxMg1sPh+IIRDBiARiDJ5GcADRfby+HAgz5qUgAbR6AxGE2GAF0QewSp44BiEOw0bj6CFwpEohT4syklF6V9cmjctcQBRQkxXsRlqhkE8sKZiHghIx2qshAh1mziIrZucQZrBbdvjs9mscO95YqcMrVfdHs9XlcQAJdk9jZkfrCAcj1udMgwjGEvddHUahDhMrTQ208IwZDhNj58BcfZzWZkoABHdYAJnOXp92HCAaAA"
+                >
+                </section>
+                <section>
+                    <h2 style="text-transform: none;">"type" KEYWORD</h2>
+                    <pre><code class="hljs typescript" data-trim>
+type contentId = string
+type key = string | number
+                    </code></pre>
+                    <pre class="fragment"><code class="hljs typescript" data-trim>
+interface ObjectInterface {
+    num: number;
+    str: string;
+}
+
+type objectType = {
+    num: number;
+    str: string;
+}
+                    </code></pre>
+                </section>
+                <section
+                        data-background-interactive
+                        data-background-iframe="https://www.typescriptlang.org/play/?strictNullChecks=false#code/MYewdgzgLgBAygfQMIHkByAVAogDQzAXngE8BbAIxABsA6AMxACcAKAcjgFMqPgomYk4KBwAeUVgEoA3AChusaIwCuvJYw6EYAbxkw9MCBwCGjYAAsAkmAAOSqAC4YrGqQ5glAWioBLaB8Mm5jAAfDDeNnasADS6+t7CpBCOOvqpMADaiKiYuBgAuo6s5BxmHq7uHvEcpNGxaTDmPADWlCKFxaWNwC0gIrWpAL4xA7IyACY8VCYadEpgvN7gMFCMRpAMjKTMECBqwByOcLumHBKOa8SyK2sQG1uKKlBqp6MyUMTWGkd7GkQXUkA"
+                >
+                </section>
+                <section>
+                    <h2>Generics</h2>
+                    <pre><code class="hljs typescript" data-trim>
+type identity&lt;T> = T
+let x: identity&lt;string> // string
+                    </code></pre>
+                    <pre class="fragment"><code class="hljs typescript" data-trim>
+type withString&lt;T> = T | string
+let y: withString&lt;number> // number | string
+                    </code></pre>
+                    <pre class="fragment"><code class="hljs typescript" data-trim>
+type input&lt;T extends object> = T | T[] | Observable&lt;T>
+let z: input&lt;Date> // Date | Date[] | Observable&lt;Date>
+                    </code></pre>
+                </section>
+                <section
+                        data-background-interactive
+                        data-background-iframe="https://www.typescriptlang.org/play/?strictNullChecks=false#code/MYewdgzgLgBAygfQMIHkByAVAogDQzAXngE8BbAIxABsA6AMxACcAKAcjgFMqPgomYk4KBwAeUVgEoA3AChusaIwCuvJYw6EYAbxkw9MCBwCGjYAAsAkmAAOSqAC4YrGqQ5glAWioBLaB8Mm5jAAfDDeNnasADS6+t7CpBCOOvqpMADaiKiYuBgAuo6s5BxmHq7uHvEcpNGxaTDmPADWlCKFxaWNwC0gIrWpAL4xA7IyMuHCjHRGwBpwIGqz2nUZTRzEjorhAOYFBlCMOzAAPjBoHNAcACbzixyyA+Ngk9NL55c3C6YaosJgVxB4F8lil9JlkOhsHg9lswNsHmMrjwqCYNHQlGBeN5wDADkZIAxGKRmBBgRxHLdvhJHAAlC5KKhQWTyAxcHh8RiAoh4glMYmKFRQNQcaRjGRQYjWDR0iAM2BEfHEKRAA"
+                >
+                </section>
+                <section>
+                    <h2 style="text-transform: none;">"keyof" KEYWORD</h2>
+                    <pre><code class="hljs typescript" data-trim>
+let s: 'one' | 'two'
+s = '1' // error
+                    </code></pre>
+                    <pre class="fragment"><code class="hljs typescript" data-trim>
+interface Interface {
+    str: string;
+    num: number;
+}
+
+let x: keyof Interface // 'str' | 'num'
+x = 'num' // ok
+x = 'test' // error
+                    </code></pre>
+                    <pre class="fragment"><code class="hljs typescript" data-trim>
+declare function log&lt;T>(obj: T, key: keyof T): void
+let obj: Interface
+
+log(obj, 'str')
+                    </code></pre>
+                </section>
+                <section>
+                    <h2>Type indexing</h2>
+                    <pre><code class="hljs typescript" data-trim>
+interface Interface {
+    str: string;
+    num: number;
+}
+
+let x: Interface['str'] // string
+let y: Interface['num'] // number
+                    </code></pre>
+                    <pre class="fragment"><code class="hljs typescript" data-trim>
+type propType&lt;T extends keyof Interface> = Interface[T]
+let z: propType&lt;'str'> // string
+                    </code></pre>
+                </section>
+                <section
+                        data-background-interactive
+                        data-background-iframe="https://www.typescriptlang.org/play/#code/KYDwDg9gTgLgBASwHY2FAZgQwMbDgZWBhmQHMBpYATzgG8AoOJuAcWCTUwBsB9AGUxJSAV0ylgALjgBydtLgAfGeijyl0gM5dpAbkbMAspjA8AkkgQlufCEMvCAJpLhJhAWwBGaPczhGT5pYI1pgkMI7Orp7e9AC+9PQwVGB4lFQAglBQmDQAvHAAFADW1BDoBEQkQmkAlADaALp6icl4hMRkaZnZVAA85PhwoKhIDhpwXVk5AHxw+Qy+dQAKiEgT+HVRXlANDVLtVRTUyw1xCVxEcCD7lZ3H0mwc2bwCQqLi0k30F-BUUpM9TbubZfBJghLIVAYHB4ADCySgwA0GgAohc3Ox4AtmNguAhsEUCjUpAA3CAIBx6eJggAG9F6XgAFgBaDGuZl4jQwab6Ji9BwIElwXGYZG5aRs4QchBc5kaYCYKDYRnSHm+Xy9ZBgYTwAD0avVfIQwq4oo0uQAREz8bZmbiIPKLdNerqEAa+bqBST3XAGcAWZLmZZgG4fRqmXbGcACR4ICBnbqI8ro0VY-HeeraLQ4AA6PNwWLxDWJ-2s9hS4OhjN5nP0ksB8vSrk8un0bC2LkEHiwgDyADkACoogAaA7mBConggXBz6GgBWkhAu2Bg0DgsNsqBAMGkNT0PzgXKgwhXwkR4+xTHliuV5m1MCk0hzgc5MDlCqVjLgsy1OukABoM0rDQpEvdU6nwbt+yHUc9hkCNA0rACM18ZMYzjR8kyjdCQGQ3xYkA2JmnQYQkBXBBbDgGBsiQDQ5ygNwCmuOBBCoYkWKQGhaGpA95WXVcoHGfJqMEOjoEYo8T3CRE9wSPjowEjQc2vT87x1Ikc1xfFCVk+SV2gJTgM0zdMGQDQF1QLld007DUzjHNgAARwKAAmGoNK0gkiWacFITQLBcDgHsPAAKwU8woQC4AAEY6AzOoSj+Q9qLIOCABFQmARoqXoPzoUC4KwpXCL-JhFy4sWCkpC2NA4KPMgcpaFI4AgUKFIHVoL3ixKpHqoR0sy7K4j0JJmvbFBMVMBxxz60gRs6xKZpSoRFBcYEYnBMFRraYB+IM-AIDPXAADVuGEPB8lm1alwU-bDqVYA+yRVBKVyib8p2vbBIOo68DAhLqF65bSDgm79O++6TrO4BGryqKKi+jQfoep6uWAabhnYMYEduiHfoq5gIKgwcRwHOrgca7acfB0xUDcXox3mWJZnyAoiTmWZ4TARFkTRENMRqOAADI4DHEWwPGmBTNogotwfZKoDIdiwYE2mQwZ6YfGYJyCmQJxmJqqBld23G1fpgdNYzdAEC4KECj0gSgcVoRja+s2Na1pgPCoAAJCAIEJJBMAxJ2yH-OASWhgB+UOXZuN26Y94ams+3GNAAJSRYRbdOrhzoZoZtyx8YVbu37c-OlnRcLkZsdLvGHozKPqcUzONGzmANYzePTbp+bmvrjOs9tgvMdGEuTfBpHIeAKv6-d-7yFWOBErKUXQcn1vh5gCvgAZupyAaS3meI0jyMo1GXsH0ei-Hluy4e6Z7ZnqQB3DsBFUxWPSHHaRdx7qebcO4awJkwRE0k1iuC4FwRq9AHYGWUh+W8SB7weTxF5XSm8EFGUltLcy0hLI7hqDZFMaYHLOTcmg7S3lNq0LBEAA"
+                >
+                </section>
+            </div>
+        </div>
+
+        <script src="js/reveal.js"></script>
+
+        <script>
+            // More info about config & dependencies:
+            // - https://github.com/hakimel/reveal.js#configuration
+            // - https://github.com/hakimel/reveal.js#dependencies
+            Reveal.initialize({
+                preloadIframes: true,
+                viewDistance: 50,
+                dependencies: [
+                    {src: 'plugin/markdown/marked.js'},
+                    {src: 'plugin/markdown/markdown.js'},
+                    {src: 'plugin/notes/notes.js', async: true},
+                    {src: 'plugin/highlight/highlight.js', async: true}
+                ]
+            });
+        </script>
+    </body>
+</html>
