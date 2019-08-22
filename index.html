@@ -64,6 +64,11 @@ selectors.items.contains('test').checkbox.eq(2)().click()
                         data-background-iframe="https://www.typescriptlang.org/play/#code/AYKAPARgpgFgtAWygOwK5wDYEsDOAXAPhAAJTiwATLAN2IGMMBDHHAXgHIk1Nc84cojAE50Y7ImUnksyAA6o8xAPQSppMFnpMWrAETQYWOgHtkcBsYG6CYJVlXqlVag-IHEKdFjxQEryZCw5jBQdADWEMYAHjZK7qKhEdH+ZADeqcQAdNnEAL65JGS27lxePn6FpNmZ4HFBpTz4RKAgJsj4xADKAPoAwgDyAHIAKgCiABrDxKxdAJ4IkRiZAGbGQgAU7J1QGKF4a8S9pj5ReOwAlADcILuK+EKodHioQlDTxKmVxALCogCScgUAC5iOxMg1sPh+IIRDBiARiDJ5GcADRfby+HAgz5qUgAbR6AxGE2GAF0QewSp44BiEOw0bj6CFwpEohT4syklF6V9cmjctcQBRQkxXsRlqhkE8sKZiHghIx2qshAh1mziIrZucQZrBbdvjs9mscO95YqcMrVfdHs9XlcQAJdk9jZkfrCAcj1udMgwjGEvddHUahDhMrTQ208IwZDhNj58BcfZzWZkoABHdYAJnOXp92HCAaAA"
                 >
                 </section>
+                <section
+                        data-background-interactive
+                        data-background-iframe="https://www.typescriptlang.org/play/?strictNullChecks=false#code/MYewdgzgLgBAygfQMIHkByAVAogDQzAXngE8BbAIxABsA6AMxACcAKAcjgFMqPgomYk4KBwAeUVgEoA3AChusaIwCuvJYw6EYAbxkw9MCBwCGjYAAsAkmAAOSqAC4YrGqQ5glAWioBLaB8Mm5jAAfDDeNnasADS6+t7CpBCOOvqpMADaiKiYuBgAuo6s5BxmHq7uHvEcpNGxaTDmPADWlCKFxaWNwC0gIrWpAL4xA7IyACY8VCYadEpgvN7gMFCMRpAMjKTMECBqwByOcLumHBKOa8SyK2sQG1uKKlBqp6MyUMTWGkd7GkQXUkA"
+                >
+                </section>
                 <section>
                     <h2>"type" keyword</h2>
                     <pre><code class="hljs typescript" data-trim>
@@ -81,11 +86,6 @@ type objectType = {
     str: string;
 }
                     </code></pre>
-                </section>
-                <section
-                        data-background-interactive
-                        data-background-iframe="https://www.typescriptlang.org/play/?strictNullChecks=false#code/MYewdgzgLgBAygfQMIHkByAVAogDQzAXngE8BbAIxABsA6AMxACcAKAcjgFMqPgomYk4KBwAeUVgEoA3AChusaIwCuvJYw6EYAbxkw9MCBwCGjYAAsAkmAAOSqAC4YrGqQ5glAWioBLaB8Mm5jAAfDDeNnasADS6+t7CpBCOOvqpMADaiKiYuBgAuo6s5BxmHq7uHvEcpNGxaTDmPADWlCKFxaWNwC0gIrWpAL4xA7IyACY8VCYadEpgvN7gMFCMRpAMjKTMECBqwByOcLumHBKOa8SyK2sQG1uKKlBqp6MyUMTWGkd7GkQXUkA"
-                >
                 </section>
                 <section>
                     <h2>Generics</h2>
@@ -190,8 +190,7 @@ let x: Interface['str'] // string
 let y: Interface['num'] // number
                     </code></pre>
                     <pre class="fragment"><code class="hljs typescript" data-trim>
-type interfacePropertyType&lt;T extends keyof Interface> = Interface[T]
-let z: interfacePropertyType&lt;'str'> // string
+let z: Interface['str' | 'num'] // string | number
                     </code></pre>
                     <pre class="fragment"><code class="hljs typescript" data-trim>
 declare function getProp&lt;T>(obj: T, key: keyof T): T[keyof T]
@@ -204,12 +203,12 @@ getProp(obj, 'str'); // string
                 </section>
                 <section
                         data-background-interactive
-                        data-background-iframe="https://www.typescriptlang.org/play/?strictNullChecks=false#code/MYewdgzgLgBAygfQMIHkByAVAogDQzAXngE8BbAIxABsA6AMxACcAKAcjgFMqPgomYk4KBwAeUVgEoA3AChusaIwCuvJYw6EYAbxkw9MCBwCGjYAAsAkmAAOSqAC4YrGqQ5glAWioBLaB8Mm5jAAfDDeNnasADS6+t7CpBCOOvqpMADaiKiYuBgAuo6s5BxmHq7uHvEcpNGxaTDmPADWlCKFxaWNwC0gIrWpAL4xA7IyMuHCjHRGwBpwIGqz2nUZTRzEjorhAOYFBlCMOzAAPjBoHNAcACbzixyyA+Ngk9NL55c3C6YaosJgVxB4F8lil9JlkOhsHg9lswNsHmMrjwqCYNHQlGBeN5wDADkZIAxGKQADz4X5uAFAu7BZgQYEcRwYCSOABKFyUVCgpOCsnkBi4PD4jEBRDxBKYpFpBxUUDUHGkY0M3F4TAgNCqiRoXR6IlkSsFqpoAVMlgiUGYEi1Pm6Fr1ApVwvVCTVoGeRnCEDYwmgki1ZmarRoHAAjswAEwSC1W7w2hVjCYcKYzDRIYjWdQQCBYbjlWCgvTAa1NC2OABuIG8VwRMigaY0bIgHK5GFCRAwUiAA"
+                        data-background-iframe="https://www.typescriptlang.org/play/?strictNullChecks=false#code/MYewdgzgLgBAygfQMIHkByAVAogDQzAXngE8BbAIxABsA6AMxACcAKAcjgFMqPgomYk4KBwAeUVgEoA3AChusaIwCuvJYw6EYAbxkw9MCBwCGjYAAsAkmAAOSqAC4YrGqQ5glAWioBLaB8Mm5jAAfDDeNnasADS6+t7CpBCOOvqpMADaiKiYuBgAuo6s5BxmHq7uHvEcpNGxaTDmPADWlCKFxaWNwC0gIrWpAL4xA7IyMuHCjHRGwBpwIGqz2nUZTRzEjorhAOYFBlCMOzAAPjBoHNAcACbzixyyA+Ngk9NL55c3C6YaosJgVxB4F8lil9JlkOhsHg9lswNsHmMrjwqCYNHQlGBeN5wDADkZIAxGKQADz4X5uAFAu7BZgQYEcRwYCSOABKFyUVCgpOCsnkBi4PD4jEBRDxBKYpFpBxUUDUHGkY0M3F4TAgNCqiRoXR6IlkSsFqpoAVMlgiUGYEi1Pm6Fr1ApVwvVCTVoGeRnCEDYwmgki1ZmarRoHAAjswAEwSC1W7w2hX6h0u-3dQOuqDuyBsCAQSSjCYcKYzDRIYjWdRZrDccqwUF6YDWpoWxwANxA3iuCJkUBLGjZEA5XIwoSIGCkQA"
                 >
                 </section>
                 <section
                         data-background-interactive
-                        data-background-iframe="https://www.typescriptlang.org/play/?strictNullChecks=false#code/MYewdgzgLgBAygfQMIHkByAVAogDQzAXngE8BbAIxABsA6AMxACcAKAcjgFMqPgomYk4KBwAeUVgEoA3AChusaIwCuvJYw6EYAbxkw9MCBwCGjYAAsAkmAAOSqAC4YrGqQ5glAWioBLaB8Mm5jAAfDDeNnasADS6+t7CpBCOOvqpMADaiKiYuBgAuo6s5BxmHq7uHvEcpNGxaTDmPADWlCKFxaWNwC0gIrWpAL4xA7IyMuHCjHRGwBpwIGqz2nUZTRzEjorhAOYFBlCMOzAAPjBoHNAcACbzixyyA+Ngk9NL55c3C6YaosJgVxB4F8lil9JlkOhsHg9lswNsHmMrjwqCYNHQlGBeN5wDADkZIAxGKQADz4X5uAFAu7BZgQYEcRwYCSOABKFyUVCgpOCsnkBi4PD4jEBRDxBKYpFpBxUUDUHGkY0M3F4TAgNCqiRoXR6IlkSsFqpoAVMlgiUGYEi1Pm6Fr1ApVwvVCTVoGeRnCEDYwmgki1ZmarRoHAAjswAEwSC1W7w2hX6h1qkPMACMCrGEw4UxmGiQxGs6ggECw3HKsFBemA1qaFscADcQN4rgiZFA8xo2RAOVyMKEiB2uxYEsTyxkANJhMAwNbEEB0GD5VnszkANSMVCUHFJ6VHeR5KwA9Pv+YFTbYHPtDnDZKlD8eTVYz4vO5zB9VibDtsED0fjeYH3ZNgOI4ADIYGYC1CFCXN8wuIsSzcKAJBgUCtAaIR3UgZgaGw5lcTMXwYEeA8ACoVg1JJlnqCt-W6VpAMveEVkeVJyKfAchxHVJtToi8dmvfQBi-FjnWSBoaJ1eijgGZCwJwmTUNdKAMM9bCaFwqB8IgQSVmI-cZEE2RW2sdslygVd103HtNDJMQKUBW5vhWAB+GB+05bkVjYl8hx7Fs21c0zXxJKyiHwUDwKQggoLzAs4OqBCkJQlZFOU5hhDESS4VwtyoCC7l+L0JNwiuRx3AoTNssCny9wGIA"
+                        data-background-iframe="https://www.typescriptlang.org/play/?strictNullChecks=false#code/MYewdgzgLgBAygfQMIHkByAVAogDQzAXngE8BbAIxABsA6AMxACcAKAcjgFMqPgomYk4KBwAeUVgEoA3AChusaIwCuvJYw6EYAbxkw9MCBwCGjYAAsAkmAAOSqAC4YrGqQ5glAWioBLaB8Mm5jAAfDDeNnasADS6+t7CpBCOOvqpMADaiKiYuBgAuo6s5BxmHq7uHvEcpNGxaTDmPADWlCKFxaWNwC0gIrWpAL4xA7IyMuHCjHRGwBpwIGqz2nUZTRzEjorhAOYFBlCMOzAAPjBoHNAcACbzixyyA+Ngk9NL55c3C6YaosJgVxB4F8lil9JlkOhsHg9lswNsHmMrjwqCYNHQlGBeN5wDADkZIAxGKQADz4X5uAFAu7BZgQYEcRwYCSOABKFyUVCgpOCsnkBi4PD4jEBRDxBKYpFpBxUUDUHGkY0M3F4TAgNCqiRoXR6IlkSsFqpoAVMlgiUGYEi1Pm6Fr1ApVwvVCTVoGeRnCEDYwmgki1ZmarRoHAAjswAEwSC1W7w2hX6h1qkPMACMCrGEw4UxmGiQxGs6ggECw3HKsFBemA1qaFscADcQN4rgiZAB6Fu4vMaNkQDlcjChIg6NtpdIAaTCYBga2IIDoMHyrPZnIsCVJY7yPNb7ZGW471i7S6gK+q3M03d7p4AZDBmBbCKFc-mLkWS24oBIYNeh+3Uq6oO7IGYYQxE2A4dmZGBz2XVd+1kYdUiTcIrkcdwKEzCCoKPGDN2HR4ZCgTtIMPU8iEw48SXLDJx3CKd1lnec9kwgA1IwqCUDg11HDcHk3Aj9yIntORYtiOP7TQyTEClAVub4VgAfgEi9+xWRdBKwk9lL4g81PIkj50-G87wIB88wLF9qjfD8vxWP8AM9YCHH2Q44Qww9dNglZEP+FClDQxhXJ07CHiAA"
                 >
                 </section>
             </div>
